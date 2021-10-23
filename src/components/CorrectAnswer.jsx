@@ -30,7 +30,7 @@ border-color: #ecf0f1;
 `;
 
 const CorrectAnswer = (props) => {
-  const { value, pointArray} = props;
+  const { value } = props;
   const globalState = useContext(store);
   const { dispatch } = globalState;
   const [point, setPoint] = useState();
@@ -43,12 +43,8 @@ const CorrectAnswer = (props) => {
   };
 
   useEffect(() => {
-    if (value.points <= 150) {
-      const num = value.points;
-      setPoint(num);
-      setTotalPoint(value.totalPoints);
-      dispatch({type: "setPoint", point: num});
-    }
+    setPoint(value.points)
+    setTotalPoint(value.totalPoints)
   }, [value]);
 
   const defaultOptions = {
@@ -59,7 +55,6 @@ const CorrectAnswer = (props) => {
       preserveAspectRatio: 'xMidYMid slice'
     }
   };
-
   return (
     <Outer>
       <Lottie options={defaultOptions}
@@ -70,9 +65,8 @@ const CorrectAnswer = (props) => {
       />
       <div className="circle-wrapper">
         <p style={{color: "#27ae60"}}>Correct!</p>
-        <span className="invisible">{point !== undefined ? pointArray.push(point) : true}</span>
         <p>You have earned {point} points</p>
-        <p>Total: {pointArray.reduce((a,b) => a + b)} points</p>
+        <p>Total: {totalPoint} points</p>
         <button onClick={nextQuestion}>Next Question</button>
       </div>
     </Outer>

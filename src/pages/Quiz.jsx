@@ -10,14 +10,13 @@ const Quiz = () => {
   const [state, setState] = useState({value: "unanswered", points: 0, totalPoints: 0, seconds: 15});
 
   window.scrollTo(0, 0)
-  const pointArray = [0];
   return (
     <store.Consumer>
       {context => (
         <>
-          <Header context={context} pointArray={pointArray} showBars={state.value === "unanswered"} state={state}/>
+          <Header context={context} showBars={state.value === "unanswered"} state={state}/>
           {state.value === "unanswered" ? <QuizItem context={context} value={state}/> : (
-          state.value === "correct" ? <CorrectAnswer pointArray={pointArray} context={context} value={state}/> : (
+          state.value === "correct" ? <CorrectAnswer context={context} value={state}/> : (
           state.value === "incorrect" ? <WrongAnswer context={context} value={state}/> : true))}
         </>
       )}

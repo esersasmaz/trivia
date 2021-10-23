@@ -14,7 +14,7 @@ const Outer = styled.div`
 `;
 
 const Header = props => {
-  const {context, showBars, state, pointArray} = props;
+  const {context, showBars, state} = props;
   const history = useHistory();
   const globalState = useContext(store);
   const { dispatch } = globalState;
@@ -33,13 +33,19 @@ const Header = props => {
       }
       return () => clearInterval(intervalId);
     } else {
-      const instantPoint = timeLeft * 10;
-      const totalPoints = state.totalPoints + instantPoint;
-      state.totalPoints = totalPoints;
-      state.points = instantPoint;
+    
       setTimeLeft(15);
     }
   }, [timeLeft, history, context]);
+
+  useEffect(() => {
+    if (!context.state.countDown) {
+      const instantPoint = timeLeft * 10;
+      const totalPoints = state.totalPoints + instantPoint;
+      state.points = instantPoint;
+      state.totalPoints = totalPoints;
+    }
+  }, [history, context]);
 
   return (
     <Outer>
@@ -47,7 +53,7 @@ const Header = props => {
         <p>Question {context.state.questionNo}/10</p>
         {showBars ? (
           <>
-          <p>{pointArray.reduce((a, b) => a + b)} Points</p>
+          <p>{state.totalPoints} Points</p>
           <p>Remaining Time: {timeLeft}</p>
           </>
         ) : true}
